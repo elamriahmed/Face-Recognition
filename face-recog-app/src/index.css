@@ -1,0 +1,117 @@
+/* Tailwind CSS Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS for Navigation */
+nav {
+    background-color: #333;
+    padding: 1rem;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav ul li {
+    margin-right: 1rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+nav ul li a:hover {
+    color: #ddd;
+    text-decoration: underline;
+}
+
+/* Custom Styles for Face Cards */
+.known-faces-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #f3f4f6; /* Tailwind's Gray-100 */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.face-card {
+    background-color: white;
+    border: 1px solid #e5e7eb; /* Tailwind's Gray-300 */
+    border-radius: 8px;
+    display: flex;
+    padding: 1rem;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.face-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.face-img-container {
+    margin-right: 1rem;
+}
+
+.face-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #e5e7eb; /* Tailwind's Gray-300 */
+}
+
+.face-details {
+    flex-grow: 1;
+}
+
+.face-details h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937; /* Tailwind's Gray-800 */
+}
+
+.face-details p {
+    margin: 0.25rem 0;
+    font-size: 0.875rem;
+    color: #4b5563; /* Tailwind's Gray-600 */
+}
+
+.no-faces-message {
+    margin-top: 2rem;
+    text-align: center;
+    color: #9ca3af; /* Tailwind's Gray-400 */
+}
+
+/* Responsive Grid for Face Cards */
+@media (min-width: 640px) {
+    .face-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .face-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Input File Styles */
+.input-file {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

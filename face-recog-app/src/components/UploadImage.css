@@ -1,0 +1,523 @@
+/* Main container for the upload image section */
+.upload-image-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Upload section styling */
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.file-input {
+    margin-bottom: 10px;
+}
+
+.upload-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+    background-color: #0056b3;
+}
+
+/* Image display section */
+.image-display {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.uploaded-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Known faces display section */
+.known-faces-display {
+    margin-top: 20px;
+}
+
+/* Container for face cards */
+.face-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Individual face card styling */
+.face-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.face-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Image styling */
+.face-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 50%;
+    
+}
+
+/* Face details styling */
+.face-details {
+    padding: 15px;
+    font-size: 14px;
+    color: #495057;
+}
+
+/* No faces message */
+.no-faces-message {
+    text-align: center;
+    font-size: 18px;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+.face-card {
+    width: 780px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.face-card img {
+    border-radius: 8px;
+    margin-right: 20px;
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+}
+.face-container{
+    align-items: center;
+}
+/* Face Details Container */
+.face-details {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Detail Group Styling */
+.detail-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Individual Detail Item Styling */
+.face-detail-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    color: #444;
+}
+
+/* Label Styling */
+.detail-label {
+    font-weight: 700;
+    color: #000;
+    margin-right: 10px;
+}
+
+/* Value Styling */
+.detail-value {
+    font-weight: 400;
+    color: #666;
+    text-align: right;
+    font-size: 0.95rem;
+}
+/* Upload Section Styling */
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically if needed */
+    padding: 20px;
+    gap: 15px; /* Spacing between elements */
+    background-color: #f9f9f9; /* Light background for contrast */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* File Input Styling */
+.file-input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Upload Button Styling */
+.upload-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff; /* Primary color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.upload-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Image Section Styling */
+.image-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff; /* White background for contrast */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Section Title Styling */
+.section-title {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333; /* Darker color for title */
+    text-align: center;
+}
+
+/* Processed Image Styling */
+.processed-image {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd; /* Light border around the image */
+    border-radius: 4px; /* Rounded corners */
+}
+/* Container for upload section */
+.upload-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 400px; /* Optional: limit maximum width */
+    margin: auto; /* Center in its container */
+}
+
+/* Wrapper for file input and button */
+.file-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between elements */
+    cursor: pointer; /* Pointer cursor to indicate clickable area */
+}
+
+/* File input styling */
+.file-input {
+    display: none; /* Hide the default file input */
+}
+
+/* Custom file input button */
+.file-input-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff; /* Primary color */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.file-input-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.file-input-button:active {
+    transform: scale(0.98); /* Slightly shrink on click */
+}
+
+/* Upload button styling */
+.upload-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #28a745; /* Green color for upload */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.upload-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.upload-button:active {
+    transform: scale(0.98); /* Slightly shrink on click */
+}
+/* Container for upload section */
+.upload-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 400px; /* Optional: limit maximum width */
+    margin: auto; /* Center in its container */
+}
+
+/* File input styling */
+.file-input {
+    display: none; /* Hide the default file input */
+}
+
+/* Upload button styling */
+.upload-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #28a745; /* Green color for upload */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.upload-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.upload-button:active {
+    transform: scale(0.98); /* Slightly shrink on click */
+}
+.upload-image-container {
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.upload-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.file-input {
+    margin-right: 10px;
+}
+
+.upload-button {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.image-section {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.uploaded-image, .processed-image {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.faces-section {
+    margin-top: 20px;
+}
+
+.face-card {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+
+
+.face-details p {
+    margin: 5px 0;
+}
+
+.no-faces-message {
+    text-align: center;
+    color: #888;
+}
+/* UploadImage.css */
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    width: 300px;
+    margin: 20px auto;
+}
+
+.upload-container input[type="file"] {
+    margin-bottom: 15px;
+}
+
+.upload-container img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-top: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.upload-container .face-info {
+    margin-top: 20px;
+    text-align: left;
+    width: 100%;
+}
+
+.upload-container .face-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.upload-container .face-info ul li {
+    background-color: #e0e0e0;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.upload-container .face-info ul li strong {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+/* UploadImage.css */
+
+/* Container for the upload image section */
+.upload-image-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Title styling */
+.upload-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+/* Container for face info list */
+.face-info-list-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Individual face info card styling */
+.face-info-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.face-info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Image styling */
+.uploaded-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Face details styling */
+.face-details {
+    font-size: 14px;
+    color: #495057;
+}
+
+/* No face info message */
+.no-face-info-message {
+    text-align: center;
+    font-size: 18px;
+    color: #6c757d;
+    margin-top: 20px;
+}
+.face-info-image {
+
+    margin-top: 50%;
+    
+}
+.upload-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.image-preview, .processed-image-container {
+    margin: 20px 0;
+}
+
+.preview-img, .processed-img {
+    max-width: 300px;
+    max-height: 300px;
+    border: 2px solid #ccc;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+.image-preview, .processed-image-container{
+text-align: center;
+}
+
+.upload-image-container, input{
+text-align-last: center;
+}

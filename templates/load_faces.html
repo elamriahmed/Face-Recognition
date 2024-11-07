@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Load Known Faces</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .face-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            background-color: #fafafa;
+        }
+        .face-card img {
+            border-radius: 8px;
+            margin-right: 20px;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        .face-details {
+            flex-grow: 1;
+        }
+        .face-details p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Known Faces</h1>
+    <div class="container">
+        {% for face in known_faces %}
+        <div class="face-card">
+            <img src="data:image/jpeg;base64,{{ face.image }}" alt="Face Image">
+            <div class="face-details">
+                <p><strong>Name:</strong> {{ face.name }}</p>
+                <p><strong>Family Name:</strong> {{ face.family_name }}</p>
+                <p><strong>ID Card:</strong> {{ face.id_card }}</p>
+                <p><strong>Passport Number:</strong> {{ face.passport_number }}</p>
+                <p><strong>Nationality:</strong> {{ face.nationality }}</p>
+                <p><strong>Sex:</strong> {{ face.sex }}</p>
+                <p><strong>Date of Birth:</strong> {{ face.date_of_birth }}</p>
+                <p><strong>Expiration Date:</strong> {{ face.expiration_date }}</p>
+                <p><strong>Country Code:</strong> {{ face.country_code }}</p>
+                <p><strong>Phone Number:</strong> {{ face.phone_number }}</p>
+                <p><strong>Status:</strong> {{ face.status }}</p>
+                <p><strong>Notes:</strong> {{ face.notes }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

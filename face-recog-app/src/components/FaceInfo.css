@@ -1,0 +1,110 @@
+.face-info-container {
+    display: grid;
+    grid-template-columns: 200px 1fr; /* Adjust column widths as needed */
+    gap: 40px; /* Space between columns */
+    align-items: start; /* Align items to the start of their cells */
+    margin-bottom: 30px; /* Space below each item */
+    border: 2px solid #ddd; /* Border for the whole container */
+    border-radius: 8px; /* Rounded corners */
+    padding: 30px; /* Padding inside the container */
+    background-color: #f9f9f9; /* Light background color */
+    width: 1050px;
+    margin: auto;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s , box-shadow 0.3s ;
+    
+}
+
+.face-info-image {
+    display: flex;
+    justify-content: center; /* Center image horizontally */
+    align-items: center; /* Center image vertically */
+    margin-top: 70%;
+
+}
+
+.face-info-image img {
+    max-width: 120%; /* Responsive image width */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners for the image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for a more professional look */
+}
+
+.face-info-details {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+
+.face-info-details p {
+    margin: 4px 0; /* Space between lines */
+    font-size: 16px; /* Font size for better readability */
+    color: #333; /* Dark text color */
+}
+
+.face-info-details strong {
+    color: #007bff; /* Highlight labels with a color */
+    font-weight: 600; /* Make labels bold */
+}
+
+.face-info-details .details-row {
+    display: flex;
+    justify-content: space-between; /* Distribute space between label and value */
+    align-items: flex-start; /* Align items to the top */
+    border-bottom: 1px solid #ccc; /* Add a line to separate each row */
+    padding: 8px 0; /* Add some padding for spacing */
+}
+
+.face-info-details .details-row span {
+    flex: 1; /* Allow labels to take up space as needed */
+    font-weight: 500; /* Slightly bold labels */
+    text-align: justify;
+    
+}
+
+.face-info-details .details-row .value {
+    flex: 3; /* Allow values to take up more space */
+    text-align: left; /* Align values to the left */
+    text-align: right; /* Align the value to the right */
+    
+
+}
+
+.face-info-details .details-row .label {
+    font-weight: bold; /* Make the label text bold (gras) */
+    
+}
+.details-row.title-row {
+    font-size: 18px; /* Larger font size for the title */
+    font-weight: bold; /* Make the title bold */
+    color: #343a40; /* Darker color for the title text */
+    border-bottom: 2px solid #ddd; /* Add a border below the title row */
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.face-info-details .details-row.title-row  .value.title-value {
+    text-align: center; /* Align the title to the right */
+    font-weight: bold; /* Make the label text bold (gras) */
+
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0; /* Add some margin for spacing */
+}
+
+.processed-image {
+    max-width: 400px;
+    max-height: 400px;
+    border-radius: 8px; /* Optional: add rounded corners */
+    box-shadow: 8px 8px 8px rgba(1, 1, 1, 0.1); /* Optional: add a subtle shadow */
+}
+.face-info-image {
+
+    margin-top: 50%;
+    
+}

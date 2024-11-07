@@ -1,0 +1,68 @@
+  
+/* src/components/Statistics.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-y: hidden; /* Prevent vertical overflow */
+  }
+  
+  .statistics-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden; /* Prevent overflow within the component */
+  }
+  
+  .statistics-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .charts-container {
+    display: flex;
+    justify-content: space-around; /* Align charts side by side */
+    align-items: flex-start; /* Align charts to the top */
+    flex-wrap: wrap; /* Allow charts to wrap on smaller screens */
+    gap: 20px; /* Space between charts */
+  }
+  
+  .chart-wrapper {
+    flex: 1; /* Allow charts to grow equally */
+    min-width: 300px; /* Minimum width for responsiveness */
+    max-width: 500px; /* Limit maximum width for larger screens */
+    animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
+  }
+  
+  .statistics-list {
+    margin-top: 20px;
+    list-style-type: none;
+    padding: 0;
+    text-align: center; /* Center list items */
+  }
+  
+  .statistics-list li {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .error-message {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
