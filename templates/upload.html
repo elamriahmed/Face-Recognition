@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        #detected-image {
+            max-width: 300px; /* Set a maximum width */
+            max-height: 300px; /* Set a maximum height */
+            object-fit: contain; /* Preserve aspect ratio */
+        }
+        .face-info {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            text-align: left;
+            max-width: 500px; /* Adjust width as needed */
+        }
+        .face-info img {
+            max-width: 150px;
+            height: auto;
+            display: block; /* Ensure images do not overflow */
+            margin-top: 10px; /* Space between text and image */
+        }
+        #add-to-db-button {
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #add-to-db-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload Image for Face Recognition</h1>
+    <form id="upload-form" action="/upload_image" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Upload Image</button>
+    </form>
+    <div id="result">
+        <h2>Detected Image</h2>
+        <img id="detected-image" src="{{ url_for('static', filename='cc.jpg') }}" alt="Detected Image">
+        <div id="face-info-container"></div>
+        <button id="add-to-db-button">You want to add it to DB?</button>
+    </div>
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('/upload_image', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Display the detected image
+                    document.getElementById('detected-image').src = 'data:image/jpeg;base64,' + data.image;
+
+
+                    // Clear previous face info
+                    const faceInfoContainer = document.getElementById('face-info-container');
+                    faceInfoContainer.innerHTML = '';
+
+                    // Display face information and images
+                    let unknownFaceDetected = false;
+                    data.face_infos.forEach(info => {
+                        const div = document.createElement('div');
+                        div.className = 'face-info';
+                        if (info) {
+                            div.innerHTML = `
+                                <h3>${info.name}</h3>
+                                <p>Family Name: ${info.family_name}</p>
+                                <p>ID Card: ${info.id_card}</p>
+                                <p>Passport Number: ${info.passport_number}</p>
+                                <p>Nationality: ${info.nationality}</p>
+                                <p>Sex: ${info.sex}</p>
+                                <p>Date of Birth: ${info.date_of_birth}</p>
+                                <p>Expiration Date: ${info.expiration_date}</p>
+                                <p>Country Code: ${info.country_code}</p>
+                                <p>Phone Number: ${info.phone_number}</p>
+                                <p>Status: ${info.status}</p>
+                                <p>Notes: ${info.notes}</p>
+                            `;
+
+                            // Check if face image exists for this info
+                            const faceImage = data.detected_face_images.find(img => img.image_blob === info.image_blob);
+                            if (faceImage) {
+                                div.innerHTML += `<img src="data:image/jpeg;base64,${faceImage.image_blob}" alt="${info.image_blob}">`;
+                            }
+                        } else {
+                            div.innerHTML = '<p>Unknown face detected.</p>';
+                            unknownFaceDetected = true;
+                        }
+
+                        faceInfoContainer.appendChild(div);
+                    });
+
+                    // Show button if unknown face detected
+                    if (unknownFaceDetected) {
+                        document.getElementById('add-to-db-button').style.display = 'inline-block';
+                    } else {
+                        document.getElementById('add-to-db-button').style.display = 'none';
+                    }
+                    
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            });
+        });
+
+        document.getElementById('add-to-db-button').addEventListener('click', function() {
+            // Redirect to the insertion page
+            window.location.href = '/insert'; // Adjust the URL as needed
+        });
+    </script>
+</body>
+</html>

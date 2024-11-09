@@ -1,0 +1,3 @@
+0ede2e94298f365ac50bea5d6f5458dae79acaa3,DELETE,regular-file,pretrained_model/dlib_face_recognition_resnet_model_v1.dat,133,
+b14c8e1d4fb893fa22ca991d748f62e3d6fd6397,DELETE,regular-file,pretrained_model/shape_predictor_5_face_landmarks.dat,132,
+1e5da4f9a556bec8582e6c55b89b3e6bfdd60021,DELETE,regular-file,pretrained_model/shape_predictor_68_face_landmarks.dat,133,

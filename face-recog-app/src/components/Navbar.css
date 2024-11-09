@@ -1,0 +1,106 @@
+/* Navbar Styles */
+header {
+    background: #1f2937; /* Dark Gray */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between; /* Distribute logo, links, and profile */
+    align-items: center;
+  }
+  
+  /* Navbar Links */
+  .nav-link {
+    color: #d1d5db; /* Light Gray */
+    font-weight: 500;
+    text-decoration: none;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .nav-link:hover {
+    background-color: #f3f4f6; /* Light Background */
+    color: #111827; /* Darker Text */
+    transform: translateY(-2px);
+  }
+  
+  .nav-link.active {
+    background-color: #e5e7eb; /* Light Gray */
+    color: #1f2937; /* Dark Gray */
+  }
+  
+  .fa-icon {
+    margin-right: 8px;
+  }
+  
+  /* Profile Dropdown */
+  .relative .block {
+    display: block;
+  }
+  
+  .relative .absolute {
+    display: none;
+  }
+  
+  /* Show dropdown */
+  .relative:hover .absolute {
+    display: block;
+  }
+  
+  @media (max-width: 768px) {
+    .nav-link {
+      display: block;
+      padding: 12px 0;
+      text-align: center;
+    }
+  
+    .md\\:hidden {
+      display: none;
+    }
+  }
+  
+  /* Hamburger Menu */
+  .md\\:hidden {
+    display: block;
+  }
+  
+  .block {
+    display: block !important;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  .dropdown-menu {
+    animation: fadeSlideIn 0.3s ease-in-out forwards;
+  }
+  
+  @keyframes fadeSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Hover effect for links */
+  .nav-link {
+    transition: color 0.3s, transform 0.3s;
+    font-weight: 500;
+  }
+  .nav-link:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+  }
