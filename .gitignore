@@ -2,5 +2,5 @@
 node_modules/
 
 # Ignore specific large model file
-pretrained_model/*.dat
+#pretrained_model/*.dat
 
