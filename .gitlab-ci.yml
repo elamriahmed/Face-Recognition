@@ -1,0 +1,88 @@
+stages:
+  - build
+  - push
+  - package_registry
+
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_DRIVER: overlay2
+
+# ------------------------
+# BACKEND JOBS
+# ------------------------
+
+build_backend:
+  stage: build
+  image: docker:24.0.7
+  services:
+    - name: docker:24.0.7-dind
+      entrypoint:
+        - /bin/sh
+        - -c
+        - dockerd-entrypoint.sh --insecure-registry $CI_REGISTRY || exit
+  script:
+    - echo "Building backend Docker image..."
+    - echo "Tagging backend image as $CI_REGISTRY_IMAGE/backend"
+    - docker build -t $CI_REGISTRY_IMAGE/backend .
+
+push_backend:
+  stage: push
+  image: docker:24.0.7
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - name: docker:24.0.7-dind
+  script:
+    - echo "Pushing $CI_REGISTRY_IMAGE/backend backend image to registry..."
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - docker push $CI_REGISTRY_IMAGE/backend:latest
+
+# ------------------------
+# PACKAGE REGISTRY JOB
+# ------------------------
+
+package_registry:
+  stage: package_registry
+  image: node:18
+  script:
+    - echo "Publishing package to GitLab registry..."
+    - echo "//gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" > .npmrc
+    - npm ci  # Installe les dépendances sans node_modules volumineux
+    - npm publish --registry=https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/ || true
+    - ls -al  # Lister les fichiers publiés pour vérification
+
+
+# ------------------------
+# FRONTEND JOBS
+# ------------------------
+
+build_frontend:
+  stage: build
+  image: docker:24.0.7
+  services:
+    - name: docker:24.0.7-dind
+      entrypoint:
+        - /bin/sh
+        - -c
+        - dockerd-entrypoint.sh --insecure-registry $CI_REGISTRY || exit
+  script:
+    - cd react  # Naviguer vers le répertoire du frontend
+    - echo "Building frontend Docker image..."
+    - docker build -t $CI_REGISTRY_IMAGE/frontend .
+  artifacts:
+    paths:
+      - react/Dockerfile
+      - react/package.json
+      - react/package-lock.json
+
+push_frontend:
+  stage: push
+  image: docker:24.0.7
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - name: docker:24.0.7-dind
+  script:
+    - echo "Pushing frontend image to registry..."
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - docker push $CI_REGISTRY_IMAGE/frontend:latest
