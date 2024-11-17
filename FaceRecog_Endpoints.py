@@ -153,9 +153,7 @@ def detect_and_crop_face(image):
     return cropped_faces, face_coords
 
 
-from sklearn.metrics.pairwise import cosine_similarity
-
-# Face recognition function with cosine similarity score calculation
+# Face recognition function with score calculation
 def easy_face_reco(frame, known_face_encodings, known_faces_info):
     rgb_small_frame = frame[:, :, ::-1]  # Convert BGR to RGB
     face_encodings_list, face_locations_list, landmarks_list = encode_face(rgb_small_frame)
@@ -181,9 +179,27 @@ def easy_face_reco(frame, known_face_encodings, known_faces_info):
         if not match_indices:
             face_infos.append(None)
 
+    for (top, right, bottom, left), name in zip(face_locations_list, face_infos):
+        # Draw rectangle around the face
+        cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
+        cv2.rectangle(frame, (left, bottom - 30), (right, bottom), (0, 255, 0), cv2.FILLED)
 
+       # Handle name being None, string, or dictionary
+        if isinstance(name, dict):
+            display_name = name.get('name', "Unknown")
+        elif isinstance(name, str):
+            display_name = name
+        else:
+            display_name = "Unknown"
+        cv2.putText(frame, display_name, (left + 2, bottom - 2), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 1)
+
+    for shape in landmarks_list:
+        for (x, y) in shape:
+            cv2.circle(frame, (x, y), 1, (255, 0, 255), -1)
 
     return frame, face_infos
+
+
 
 @app.route('/upload_image', methods=['POST'])
 def upload_image():
@@ -372,7 +388,9 @@ def load_known_faces():
                 print(f"Error processing image: {e}")
                 continue
 
+        # Add the _id field to the response and convert ObjectId to string
         known_face_names.append({
+            
             'name': name,
             'family_name': document.get('family_name', 'Unknown'),
             'id_card': document.get('id_card', 'Unknown'),
@@ -394,6 +412,7 @@ def load_known_faces():
         'face_encodings': known_face_encodings,
         'face_names': known_face_names
     })
+
 
 @app.route('/get_statistics', methods=['GET'])
 def get_statistics():
@@ -442,6 +461,37 @@ def get_statistics():
         print("Error in /get_statistics endpoint:", e)
         traceback.print_exc()
         return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+@app.route('/update_face_status', methods=['POST'])
+def update_face_status():
+    try:
+        data = request.json
+        id_card = data.get('id_card')  # Use id_card instead of face_id
+        status = data.get('status')
+
+        # Debugging to confirm payload
+        print("Received Payload:", data)
+        print("Extracted id_card:", id_card, "Status:", status)
+
+        if not all([id_card, status]):
+            print("Missing id_card or status.")  # Debug
+            return jsonify({'status': 'error', 'message': 'Missing id_card or status.'}), 400
+
+        # Ensure id_card exists in the database
+        result = collection.update_one({'id_card': id_card}, {'$set': {'status': status}})
+        if result.matched_count == 0:
+            print("id_card not found.")  # Debug
+            return jsonify({'status': 'error', 'message': 'id_card not found.'}), 404
+
+        return jsonify({'status': 'success', 'message': 'Face status updated successfully.'})
+    except Exception as e:
+        print("Exception:", str(e))  # Debug
+        traceback.print_exc()
+        return jsonify({'status': 'error', 'message': 'Could not update face status.'}), 500
+
+
+
 
     
 if __name__ == '__main__':
