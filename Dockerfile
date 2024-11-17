@@ -1,4 +1,4 @@
-# Use the official Python image as a parent image 
+# Use the official Python image as a parent image
 FROM python:3.8-slim
 
 # Set the working directory in the container
@@ -10,12 +10,16 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     gcc \
     build-essential \
+    cmake \
+    libboost-all-dev \
+    python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements.txt to the container
 COPY requirements.txt .
 
 # Upgrade pip and install Python dependencies
+RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code to the container
