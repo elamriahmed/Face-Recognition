@@ -54,9 +54,9 @@ package_registry_Backend:
     - pip install --upgrade pip
     - pip install twine
 
-    # Create a tarball (tar.gz) of your project directory
+    # Create a tarball (tar.gz) of your project directory, excluding certain files if needed
     - echo "Creating tarball archive..."
-    - tar -czvf your-package.tar.gz .  # Creates a tarball of the entire project directory
+    - tar --warning=no-file-changed -czvf your-package.tar.gz .  # Create tarball and suppress warning for changed files
 
     # Optionally, list the contents of the current directory to verify the tar file exists
     - ls -al
@@ -67,6 +67,7 @@ package_registry_Backend:
 
     # Optionally, list the contents of the dist directory to verify
     - ls -al
+
 
 
 
