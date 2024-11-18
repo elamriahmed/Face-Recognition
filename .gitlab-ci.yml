@@ -1,6 +1,8 @@
 stages:
   - package_registry
   - build
+  - sonarqube-check
+  - security_scan
   - push
 
 
@@ -39,17 +41,18 @@ push_backend:
     - docker push $CI_REGISTRY_IMAGE/backend:latest
 
 # ------------------------
-# PACKAGE REGISTRY JOB
+# PACKAGE REGISTRY JOBS
 # ------------------------
 package_registry_Backend:
   stage: package_registry
   image: python:3.8  # Use a Python Docker image
   script:
     - echo "Publishing package to GitLab registry..."
-    - pip install --upgrade setuptools wheel twine  # Install necessary packaging tools
-    - python setup.py sdist bdist_wheel  # Build your package
+    - pip install --upgrade setuptools wheel twine build  # Install necessary packaging tools
+    - python -m build  # Build your package using the pyproject.toml
     - twine upload --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/* -u __token__ -p ${CI_JOB_TOKEN}  # Upload to GitLab PyPi registry
     - ls -al dist/  # List the built package files for verification
+
 
 
 package_registry_Frontend:
@@ -98,3 +101,50 @@ push_frontend:
     - echo "Pushing frontend image to registry..."
     - docker login  -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" http://$CI_REGISTRY
     - docker push $CI_REGISTRY_IMAGE/frontend:latest
+
+
+# ------------------------
+# SONARQUBE JOB
+# ------------------------
+
+sonarqube-check:
+  stage:
+    sonarqube-check
+  environment:
+    name: SonarQube
+    url: $SONAR_HOST_URL
+  
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - sonar-scanner
+
+
+# ------------------------
+# SECURITY JOBS
+# ------------------------
+
+docker_security_scan_back:
+  stage: security_scan
+  image:
+    name: aquasec/trivy:0.18.0  # Use the specific version that supports --exit-code
+    entrypoint: [""]
+  script:
+    - trivy --severity HIGH,CRITICAL $CI_REGISTRY/backend:latest
+
+
+docker_security_scan_front:
+  stage: security_scan
+  image:
+    name: aquasec/trivy:0.18.0  # Use the specific version that supports --exit-code
+    entrypoint: [""]
+  script:
+    - trivy --severity HIGH,CRITICAL $CI_REGISTRY/frontend:latest
