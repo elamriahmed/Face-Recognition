@@ -1,7 +1,8 @@
 stages:
+  - package_registry
   - build
   - push
-  - package_registry
+
 
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
@@ -40,12 +41,23 @@ push_backend:
 # ------------------------
 # PACKAGE REGISTRY JOB
 # ------------------------
+package_registry_Backend:
+  stage: package_registry
+  image: python:3.8  # Use a Python Docker image
+  script:
+    - echo "Publishing package to GitLab registry..."
+    - pip install --upgrade setuptools wheel twine  # Install necessary packaging tools
+    - python setup.py sdist bdist_wheel  # Build your package
+    - twine upload --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/* -u __token__ -p ${CI_JOB_TOKEN}  # Upload to GitLab PyPi registry
+    - ls -al dist/  # List the built package files for verification
 
-package_registry:
+
+package_registry_Frontend:
   stage: package_registry
   image: node:18
   script:
     - echo "Publishing package to GitLab registry..."
+    - cd face-recog-app
     - echo "//gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" > .npmrc
     - npm ci  # Installe les dépendances sans node_modules volumineux
     - npm publish --registry=https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/ || true
