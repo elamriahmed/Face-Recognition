@@ -4,7 +4,7 @@ stages:
   - sonarqube-check
   - security_scan
   - push
-
+  - deploy
 
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
@@ -103,11 +103,7 @@ build_frontend:
     - cd face-recog-app  # Naviguer vers le répertoire du frontend
     - echo "Building frontend Docker image..."
     - docker build -t $CI_REGISTRY_IMAGE/frontend .
-  artifacts:
-    paths:
-      - react/Dockerfile
-      - react/package.json
-      - react/package-lock.json
+
 
 push_frontend:
   stage: push
@@ -167,3 +163,22 @@ docker_security_scan_front:
     entrypoint: [""]
   script:
     - trivy --severity HIGH,CRITICAL $CI_REGISTRY/face_recognition_app/frontend:latest
+
+
+# ------------------------
+# DEPLOY STAGE
+# ------------------------
+
+deploy_application:
+  stage: deploy
+  image: docker/compose:latest
+  services:
+    - name: docker:24.0.7-dind
+      entrypoint:
+        - /bin/sh
+        - -c
+        - dockerd-entrypoint.sh --insecure-registry $CI_REGISTRY || exit
+  script:
+    - echo "Deploying application using Docker Compose..."
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" http://$CI_REGISTRY
+    - docker-compose up -d  # Start services in detached mode

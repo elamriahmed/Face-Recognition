@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  backend:
+    image: ${CI_REGISTRY_IMAGE}/backend:latest
+    container_name: backend
+    ports:
+      - "8001:8001"  # Expose backend port (adjust as needed)
+    environment:
+      - DATABASE_URL=mongodb://mongodb:27017/face_database  # Use the service name 'mongodb' instead of 'mongo'
+    depends_on:
+      - mongodb
+
+  frontend:
+    image: ${CI_REGISTRY_IMAGE}/frontend:latest
+    container_name: frontend
+    ports:
+      - "3000:3000"  # Expose frontend port (adjust as needed)
+    depends_on:
+      - backend
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - my_app_network  # Ensure mongodb is connected to the custom network
+
+networks:
+  my_app_network:  # Define the custom network for all services
+    driver: bridge  # Optionally specify the network driver

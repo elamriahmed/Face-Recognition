@@ -23,5 +23,5 @@ COPY . .
 EXPOSE 3000
 
 # Default command to run your app
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+CMD ["npm", "run", "start", "--", "--host", "0.0.0.0"]
 

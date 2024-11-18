@@ -7,4 +7,4 @@ dlib==19.24.1
 Pillow==9.2.0
 numpy==1.23.1
 imutils==0.5.4
-bson==0.5.10
+
