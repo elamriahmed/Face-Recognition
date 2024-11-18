@@ -51,7 +51,7 @@ package_registry_backend:
   image: python:3.8  # Or any lightweight image with curl if Python isn't needed
   script:
     - echo "Creating a tar archive of the project..."
-
+    
     # Create the tar.gz archive from the project directory
     - tar -czvf my_project.tar.gz my_project_directory/
 
