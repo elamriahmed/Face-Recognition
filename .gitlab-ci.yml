@@ -1,8 +1,8 @@
 stages:
-  - package_registry
   - build
-  - sonarqube-check
   - security_scan
+  - sonarqube-check
+  - package_registry
   - push
   - deploy
 
