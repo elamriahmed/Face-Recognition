@@ -48,20 +48,26 @@ package_registry_Backend:
   stage: package_registry
   image: python:3.8  # Use an appropriate Python version
   script:
-    - echo "Publishing Python package to GitLab registry..."
+    - echo "Creating and publishing Python package to GitLab registry..."
 
     # Install twine for uploading the package
     - pip install --upgrade pip
     - pip install twine
 
+    # Create a tarball (tar.gz) of your project directory
+    - echo "Creating tarball archive..."
+    - tar -czvf your-package.tar.gz .  # Creates a tarball of the entire project directory
+
     # Optionally, list the contents of the current directory to verify the tar file exists
     - ls -al
 
-    # Upload the existing tar package to the GitLab registry
+    # Upload the tarball to the GitLab registry
+    - echo "Uploading tarball to GitLab package registry..."
     - twine upload --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi your-package.tar.gz -u ${CI_JOB_USER:-__token__} -p ${CI_JOB_TOKEN}
 
     # Optionally, list the contents of the dist directory to verify
     - ls -al
+
 
 
 
