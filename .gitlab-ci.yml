@@ -50,18 +50,19 @@ package_registry_Backend:
   script:
     - echo "Publishing Python package to GitLab registry..."
 
-    # Update pip and install twine
+    # Install twine and other necessary tools
     - pip install --upgrade pip
     - pip install twine
 
-    # Create a tarball from the current git commit
-    - git archive -o my_project.tar.gz HEAD
+    # Create a tarball or wheel from the current project directory (optional step if needed)
+    - python -m build  # Ensure this step packages your project if needed
 
-    # Upload the tarball to GitLab PyPI registry
-    - twine upload --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi my_project.tar.gz -u ${CI_JOB_TOKEN}
+    # Upload the package using the CI_JOB_TOKEN for authentication
+    - twine upload --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/* -u ${CI_JOB_USER:-__token__} -p ${CI_JOB_TOKEN}
 
-    # Optionally list the contents to verify the tarball
-    - ls -al
+    # List the contents to verify
+    - ls -al dist/
+
 
 
 
