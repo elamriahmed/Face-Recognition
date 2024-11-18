@@ -46,8 +46,11 @@ push_backend:
 
 package_registry_Backend:
   stage: package_registry
-  image: alpine  # Use a lightweight image since no Python tools are needed for `curl`
+  image: alpine  # Lightweight base image
   script:
+    - echo "Installing curl..."
+    - apk update && apk add curl  # Install curl in the Alpine image
+
     - echo "Creating and pushing a tarball to GitLab's generic package registry..."
 
     # Create the tarball of your project directory
@@ -64,7 +67,6 @@ package_registry_Backend:
 
     # List contents to verify
     - ls -al
-
 
 
 
