@@ -63,7 +63,7 @@ package_registry_Backend:
     - echo "Uploading tarball to GitLab's generic package registry..."
     - >
       curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file Face_Recognition_App.tar.gz
-      "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/generic/your-package-name/1.0/Face_Recognition_App.tar.gz"
+      "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/generic/Face_Recognition_App/1.0/Face_Recognition_App.tar.gz"
 
     # List contents to verify
     - ls -al
@@ -157,7 +157,7 @@ docker_security_scan_back:
     name: aquasec/trivy:0.18.0  # Use the specific version that supports --exit-code
     entrypoint: [""]
   script:
-    - trivy --severity HIGH,CRITICAL $CI_REGISTRY/backend:latest
+    - trivy --severity HIGH,CRITICAL $CI_REGISTRY/face_recognition_app/backend:latest
 
 
 docker_security_scan_front:
@@ -166,4 +166,4 @@ docker_security_scan_front:
     name: aquasec/trivy:0.18.0  # Use the specific version that supports --exit-code
     entrypoint: [""]
   script:
-    - trivy --severity HIGH,CRITICAL $CI_REGISTRY/frontend:latest
+    - trivy --severity HIGH,CRITICAL $CI_REGISTRY/face_recognition_app/frontend:latest
