@@ -63,7 +63,7 @@ package_registry_Backend:
     - echo "Uploading tarball to GitLab's generic package registry..."
     - >
       curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file Face_Recognition_App.tar.gz
-      "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/generic/your-package-name/1.0/your-package.tar.gz"
+      "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/generic/your-package-name/1.0/Face_Recognition_App.tar.gz"
 
     # List contents to verify
     - ls -al

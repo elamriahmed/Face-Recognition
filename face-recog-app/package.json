@@ -1,7 +1,6 @@
 {
   "name": "face-recog-app",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@heroicons/react": "^1.0.6",
     "axios": "^1.7.7",
