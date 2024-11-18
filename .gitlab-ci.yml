@@ -46,26 +46,23 @@ push_backend:
 
 package_registry_Backend:
   stage: package_registry
-  image: python:3.8  # Use an appropriate Python version
+  image: alpine  # Use a lightweight image since no Python tools are needed for `curl`
   script:
-    - echo "Creating and publishing Python package to GitLab registry..."
+    - echo "Creating and pushing a tarball to GitLab's generic package registry..."
 
-    # Install twine for uploading the package
-    - pip install --upgrade pip
-    - pip install twine
+    # Create the tarball of your project directory
+    - tar -czvf your-package.tar.gz .
 
-    # Create a tarball (tar.gz) of your project directory, excluding certain files if needed
-    - echo "Creating tarball archive..."
-    - tar --warning=no-file-changed -czvf your-package.tar.gz .  # Create tarball and suppress warning for changed files
-
-    # Optionally, list the contents of the current directory to verify the tar file exists
+    # Verify that the tarball was created
     - ls -al
 
-    # Upload the tarball to the GitLab registry
-    - echo "Uploading tarball to GitLab package registry..."
-    - twine upload --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi your-package.tar.gz -u ${CI_JOB_USER:-__token__} -p ${CI_JOB_TOKEN}
+    # Upload the tarball using `curl`
+    - echo "Uploading tarball to GitLab's generic package registry..."
+    - >
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file your-package.tar.gz
+      "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/generic/your-package-name/1.0/your-package.tar.gz"
 
-    # Optionally, list the contents of the dist directory to verify
+    # List contents to verify
     - ls -al
 
 
