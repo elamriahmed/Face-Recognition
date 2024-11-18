@@ -1,10 +1,14 @@
 ###Run Backend Web Interface###
-> mongod --dbpath C:\mongodb\data                                                    
-> python .\FaceRecog_Endpoints.py
+
+mongod --dbpath C:\mongodb\data                                                    
+
+python .\FaceRecog_Endpoints.py
 
 ###Run Frontend Web Interface###
-> cd face-recog-app
-> node node_modules/react-scripts/bin/react-scripts.js start
+
+cd face-recog-app
+
+node node_modules/react-scripts/bin/react-scripts.js start
 
 
 ######################################################################
