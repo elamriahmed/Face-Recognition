@@ -50,13 +50,20 @@ package_registry_Backend:
   image: python:3.8  # Use an appropriate Python version
   script:
     - echo "Publishing Python package to GitLab registry..."
+    
+    # Install system dependencies for building dlib
+    - apt-get update
+    - apt-get install -y cmake build-essential
 
-    # Install required tools
+    # Install pip dependencies
     - pip install --upgrade pip
     - pip install setuptools wheel twine
 
     # Install dependencies from requirements.txt if available (optional)
     - pip install -r requirements.txt
+
+    # Install dlib
+    - pip install dlib
 
     # Build the Python package using pyproject.toml
     - python -m build  # This will create the dist/ directory with .tar.gz and .whl files
@@ -64,7 +71,7 @@ package_registry_Backend:
     # Publish the package to GitLab PyPI registry
     - twine upload --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/* -u ${CI_JOB_TOKEN}
 
-    # List the contents of the dist directory to verify the build
+    # Optionally list the contents of the dist directory to verify package build
     - ls -al dist/
 
 
