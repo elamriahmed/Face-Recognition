@@ -50,18 +50,18 @@ package_registry_Backend:
   script:
     - echo "Publishing Python package to GitLab registry..."
 
-    # Install necessary Python tools
+    # Install twine for uploading the package
     - pip install --upgrade pip
-    - pip install setuptools wheel twine build  # Added `build` here
+    - pip install twine
 
-    # Create a tarball or wheel from the current project directory
-    - python -m build  # This will package your project and create the `dist/` directory
+    # Optionally, list the contents of the current directory to verify the tar file exists
+    - ls -al
 
-    # Upload the package using the CI_JOB_TOKEN for authentication
-    - twine upload --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/* -u ${CI_JOB_USER:-__token__} -p ${CI_JOB_TOKEN}
+    # Upload the existing tar package to the GitLab registry
+    - twine upload --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi your-package.tar.gz -u ${CI_JOB_USER:-__token__} -p ${CI_JOB_TOKEN}
 
     # Optionally, list the contents of the dist directory to verify
-    - ls -al dist/
+    - ls -al
 
 
 
