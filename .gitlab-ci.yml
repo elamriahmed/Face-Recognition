@@ -44,24 +44,21 @@ push_backend:
 # PACKAGE REGISTRY JOBS
 # ------------------------
 
-
 package_registry_Backend:
   stage: package_registry
   image: python:3.8  # Use an appropriate Python version
   script:
     - echo "Publishing Python package to GitLab registry..."
 
-    # Optional: If your project doesn't have a setup.py or pyproject.toml, you may just push the source code itself.
-    # If you're uploading an existing package that doesn't require building, skip the build steps.
+    # Create a tarball from the current git commit
+    - git archive -o my_project.tar.gz HEAD
 
-    # Create a tarball of your project directory (or point it to a specific directory)
-    - tar -czvf my_project.tar.gz .  # This will package your project into a .tar.gz file
-
-    # Upload the tarball or package to GitLab Package Registry (PyPI)
+    # Upload the tarball to GitLab PyPI registry
     - twine upload --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi my_project.tar.gz -u ${CI_JOB_TOKEN}
 
-    # Optionally list the contents of the current directory to verify the tarball was created
+    # Optionally list the contents to verify the tarball
     - ls -al
+
 
 
 package_registry_Frontend:
