@@ -105,28 +105,31 @@ npm install react axios
 
 ```
 face-recognition-app/
-├── backend/
-│   ├── app.py               # Flask server for face detection/recognition
-│   ├── requirements.txt     # Backend dependencies
-│   ├── pretrained_model/
-│   │   ├── shape_predictor_68_face_landmarks.dat
-│   │   ├── shape_predictor_5_face_landmarks.dat
-│   │   └── dlib_face_recognition_resnet_model_v1.dat
-│   └── database/
-│       ├── mongo_config.py  # MongoDB connection settings
-│       └── face_data.json   # Example data (optional)
-├── frontend/
+├── FaceRecog_Endpoints.py               # Flask server for face detection/recognition
+├── requirements.txt 				      # Backend dependencies
+├── pretrained_model/
+│   ├── shape_predictor_68_face_landmarks.dat
+│   ├── shape_predictor_5_face_landmarks.dat
+│   └── dlib_face_recognition_resnet_model_v1.dat
+├── face-recog-app/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── KnownFaces.js       # Displays known faces
+│   │   │   ├── InsertData.js       # Displays InsertData Formula
+│   │   │   ├── Login.js       	  # Displays Login interface
+│   │   │   ├── Navbar.js           # Displays Navbar 
+│   │   │   ├── Signup.js           # Displays Signup interface
+│   │   │   ├── Statistics.js       # Displays Statistics interface
 │   │   │   ├── UploadImage.js      # Image upload interface
 │   │   │   └── FaceInfo.js         # Displays recognized face details
 │   │   ├── App.js                  # Main React application file
 │   │   └── services/
 │   │       └── api.js              # Axios requests to the Flask backend
 │   ├── public/
+│   │   ├── favicon.ico       		  # Icon for the Application
 │   │   └── index.html              # React root template
 │   └── package.json                # Frontend dependencies
+│   ├── node_modules/
 └── README.md
 ```
 
