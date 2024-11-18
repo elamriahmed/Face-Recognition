@@ -44,23 +44,24 @@ push_backend:
 # PACKAGE REGISTRY JOBS
 # ------------------------
 
-
-
-package_registry_backend:
+package_registry_Backend:
   stage: package_registry
-  image: python:3.8  # Or any lightweight image with curl if Python isn't needed
+  image: python:3.8  # Use an appropriate Python version
   script:
-    - echo "Creating a tar archive of the project..."
-    
-    # Create the tar.gz archive from the project directory
-    - tar -czvf my_project.tar.gz my_project_directory/
+    - echo "Publishing Python package to GitLab registry..."
 
-    - echo "Uploading the tar archive to GitLab package registry..."
+    # Install necessary Python tools
+    - pip install --upgrade pip
+    - pip install setuptools wheel twine build  # Added `build` here
 
-    # Upload the tarball to GitLab Package Registry using curl
-    - curl --header "PRIVATE-TOKEN: ${CI_JOB_TOKEN}" \
-      --upload-file my_project.tar.gz \
-      "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/generic/my-package/0.1.0/my_project.tar.gz"
+    # Create a tarball or wheel from the current project directory
+    - python -m build  # This will package your project and create the `dist/` directory
+
+    # Upload the package using the CI_JOB_TOKEN for authentication
+    - twine upload --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/* -u ${CI_JOB_USER:-__token__} -p ${CI_JOB_TOKEN}
+
+    # Optionally, list the contents of the dist directory to verify
+    - ls -al dist/
 
 
 
