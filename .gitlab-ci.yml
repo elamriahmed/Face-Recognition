@@ -50,6 +50,10 @@ package_registry_Backend:
   script:
     - echo "Publishing Python package to GitLab registry..."
 
+    # Update pip and install twine
+    - pip install --upgrade pip
+    - pip install twine
+
     # Create a tarball from the current git commit
     - git archive -o my_project.tar.gz HEAD
 
@@ -58,6 +62,7 @@ package_registry_Backend:
 
     # Optionally list the contents to verify the tarball
     - ls -al
+
 
 
 
